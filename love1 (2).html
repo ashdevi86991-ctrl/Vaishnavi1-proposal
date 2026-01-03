@@ -1,0 +1,332 @@
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Lucky & Vaishnavi Forever</title>
+
+<style>
+html,body{
+  margin:0;
+  padding:0;
+  height:100%;
+  background:radial-gradient(circle at top,#1b1f3b,#050714);
+  overflow:hidden;
+  font-family:Georgia,serif;
+  color:#fff;
+}
+
+/* ===== EMOJI RAIN ===== */
+canvas{
+  position:fixed;
+  inset:0;
+  z-index:0;
+}
+
+/* ===== BUTTONS ===== */
+.buttons{
+  position:fixed;
+  bottom:35px;
+  width:100%;
+  text-align:center;
+  z-index:10;
+  display:none;
+}
+button{
+  padding:12px 30px;
+  margin:10px;
+  font-size:16px;
+  border:none;
+  border-radius:10px;
+  background:linear-gradient(135deg,#ff4e89,#ff85b0);
+  color:#fff;
+  cursor:pointer;
+  box-shadow:0 4px 12px rgba(0,0,0,.4);
+}
+
+/* ===== BOOK ===== */
+.book{
+  position:absolute;
+  top:8%;
+  left:50%;
+  transform:translateX(-50%);
+  width:90%;
+  max-width:420px;
+  background:rgba(255,255,255,0.95);
+  color:#3b2f2f;
+  padding:28px;
+  border-radius:16px;
+  box-shadow:0 0 40px rgba(255,120,180,.45);
+  z-index:2;
+  animation:openBook 2s forwards;
+}
+@keyframes openBook{
+  from{transform:translateX(-50%) scale(.5);opacity:0}
+  to{transform:translateX(-50%) scale(1);opacity:1}
+}
+.text{white-space:pre-line;font-size:16px;line-height:1.7}
+
+/* ===== TEDDY ===== */
+#teddy{
+  position:fixed;
+  bottom:-150px;
+  left:50%;
+  transform:translateX(-50%) scale(1);
+  font-size:90px;
+  z-index:6;
+  transition:2.5s ease;
+}
+.heartbeat{
+  animation:heartbeat 1s infinite;
+}
+@keyframes heartbeat{
+  0%{transform:translateX(-50%) scale(2.2)}
+  25%{transform:translateX(-50%) scale(2.35)}
+  50%{transform:translateX(-50%) scale(2.2)}
+  75%{transform:translateX(-50%) scale(2.4)}
+  100%{transform:translateX(-50%) scale(2.2)}
+}
+
+/* ===== SCREENS ===== */
+.screen{
+  position:fixed;
+  inset:0;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  text-align:center;
+  z-index:5;
+}
+.bigHeart{font-size:90px}
+.ring{font-size:80px}
+.krishna img{width:230px;border-radius:14px}
+.weddingCard{
+  width:300px;
+  height:400px;
+  background:#fff;
+  color:#333;
+  border-radius:16px;
+  box-shadow:0 0 25px rgba(0,0,0,0.5);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  font-size:20px;
+  padding:20px;
+}
+.phereList, .vachanList{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:12px;
+  margin-top:20px;
+}
+.tick{
+  margin-left:10px;
+  cursor:pointer;
+  color:#fff;
+  font-weight:bold;
+  border:2px solid #fff;
+  border-radius:50%;
+  width:24px;
+  height:24px;
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  font-size:16px;
+  transition:0.3s;
+}
+.tick.done{
+  background:#28a745;
+  color:#fff;
+  border:none;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="emojis"></canvas>
+
+<!-- BOOK -->
+<div class="book" id="book">
+  <h2>📖 Welcome My Future Wife</h2>
+  <div class="text" id="text"></div>
+</div>
+<div class="buttons" id="btn1">
+  <button onclick="startTeddy()">YES</button>
+  <button>NO</button>
+</div>
+
+<!-- TEDDY -->
+<div id="teddy">🧸🤍</div>
+
+<!-- HEART SCREEN -->
+<div class="screen" id="heart">
+  <div class="bigHeart">❤️</div>
+  <h2>I Love You Vaishnavi</h2>
+  <p>Kya mere saath 2026 se puri zindagi chalogi?</p>
+</div>
+<div class="buttons" id="btn2">
+  <button onclick="proposal()">YES</button>
+  <button>NO</button>
+</div>
+
+<!-- PROPOSAL -->
+<div class="screen" id="proposal">
+  <h2>Kya mujhse shaadi karke</h2>
+  <p>meri life ko aur behter banaogi?</p>
+</div>
+<div class="buttons" id="btn3">
+  <button onclick="ring()">YES</button>
+  <button>NO</button>
+</div>
+
+<!-- RING SCREEN -->
+<div class="screen" id="ring">
+  <div class="ring">💍</div>
+  <h2>Lo ise pehn lo 💖</h2>
+</div>
+<div class="buttons" id="btn4">
+  <button onclick="weddingCard()">Pehn liya</button>
+</div>
+
+<!-- WEDDING CARD -->
+<div class="screen" id="weddingCard">
+  <div class="weddingCard" id="card">
+    <h2>💐 Lucky weds Vaishnavi 💐</h2>
+    <p>🌹 Shaadi Invitation 🌹</p>
+  </div>
+  <div class="buttons" id="btn5">
+    <button onclick="phereScreen()">Continue</button>
+  </div>
+</div>
+
+<!-- 7 PHERE SCREEN -->
+<div class="screen" id="phere">
+  <h2>7 Phere</h2>
+  <div class="phereList">
+    <div>1. <span class="tick" onclick="checkTick(this)">✔</span></div>
+    <div>2. <span class="tick" onclick="checkTick(this)">✔</span></div>
+    <div>3. <span class="tick" onclick="checkTick(this)">✔</span></div>
+    <div>4. <span class="tick" onclick="checkTick(this)">✔</span></div>
+    <div>5. <span class="tick" onclick="checkTick(this)">✔</span></div>
+    <div>6. <span class="tick" onclick="checkTick(this)">✔</span></div>
+    <div>7. <span class="tick" onclick="checkTick(this)">✔</span></div>
+  </div>
+</div>
+
+<!-- 7 VACHAN SCREEN -->
+<div class="screen" id="vachan">
+  <h2>7 Vachan</h2>
+  <div class="vachanList">
+    <div>1. Main hamesha tumhara saath dunga. <span class="tick" onclick="checkVachan(this)">✔</span></div>
+    <div>2. Main tumhari khushi ke liye jeeunga. <span class="tick" onclick="checkVachan(this)">✔</span></div>
+    <div>3. Main tumhare sapno ko support karunga. <span class="tick" onclick="checkVachan(this)">✔</span></div>
+    <div>4. Main tumhe kabhi udaas nahi dekhunga. <span class="tick" onclick="checkVachan(this)">✔</span></div>
+    <div>5. Main tumhare liye hamesha honest rahunga. <span class="tick" onclick="checkVachan(this)">✔</span></div>
+    <div>6. Main tumhare liye hamesha respectful rahunga. <span class="tick" onclick="checkVachan(this)">✔</span></div>
+    <div>7. Main tumhare saath har janm me rahne ka vachan deta hoon. <span class="tick" onclick="checkVachan(this)">✔</span></div>
+  </div>
+</div>
+
+<!-- KRISHNA FINAL -->
+<div class="screen" id="krishna">
+  <div class="krishna">
+    <img src="krishna.jpg">
+    <p>Vivah sampann hua!<br>Ab se Vaishnavi aur Lucky<br>7 janmo ke liye saath 🌸</p>
+  </div>
+</div>
+
+<script>
+/* ===== EMOJI RAIN ===== */
+const canvas=document.getElementById("emojis");
+const ctx=canvas.getContext("2d");
+function resize(){canvas.width=innerWidth;canvas.height=innerHeight}
+resize();addEventListener("resize",resize);
+
+const emojis=["❤️","💖","✨","⭐","🌸","💞","🌙","🕊️"];
+const drops=[];
+for(let i=0;i<60;i++){
+  drops.push({
+    x:Math.random()*canvas.width,
+    y:Math.random()*canvas.height,
+    s:Math.random()*1.5+0.8,
+    e:emojis[Math.floor(Math.random()*emojis.length)],
+    z:Math.random()*22+12
+  });
+}
+function rain(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  drops.forEach(d=>{
+    ctx.font=d.z+"px serif";
+    ctx.fillText(d.e,d.x,d.y);
+    d.y+=d.s;
+    if(d.y>canvas.height){d.y=-30;d.x=Math.random()*canvas.width;}
+  });
+  requestAnimationFrame(rain);
+}
+rain();
+
+/* ===== TYPEWRITER ===== */
+const lines=[
+"I promise I’ll always walk with you,",
+"har mod par, har paristhiti mein.",
+"",
+"tum jaisi bhi ho,",
+"mere liye kaafi ho 💗",
+"",
+"Will you be mine forever?"
+];
+let l=0,c=0;
+const t=document.getElementById("text");
+function type(){
+ if(l>=lines.length){
+   document.getElementById("btn1").style.display="block";
+   return;
+ }
+ if(c<lines[l].length){
+   t.textContent+=lines[l].charAt(c++);
+   setTimeout(type,45);
+ }else{
+   t.textContent+="\n";
+   l++;c=0;
+   setTimeout(type,280);
+ }
+}
+type();
+
+/* ===== FLOW ===== */
+function startTeddy(){
+ hideAll();
+ const teddy=document.getElementById("teddy");
+ teddy.style.display="block";
+ teddy.style.bottom="45%";
+ setTimeout(()=>{teddy.style.transform="translateX(-50%) scale(2.2)";teddy.classList.add("heartbeat");},700);
+ setTimeout(()=>{
+   teddy.classList.remove("heartbeat");
+   teddy.style.display="none";
+   document.getElementById("heart").style.display="flex";
+   document.getElementById("btn2").style.display="block";
+ },3800);
+}
+
+function proposal(){ hideAll(); document.getElementById("proposal").style.display="flex"; document.getElementById("btn3").style.display="block";}
+function ring(){ hideAll(); document.getElementById("ring").style.display="flex"; document.getElementById("btn4").style.display="block";}
+function weddingCard(){ hideAll(); document.getElementById("weddingCard").style.display="flex"; document.getElementById("btn5").style.display="block";}
+function phereScreen(){ hideAll(); document.getElementById("phere").style.display="flex";}
+
+/* 7 PHERE TICK LOGIC */
+let phereCount=0;
+function checkTick(el){ if(!el.classList.contains("done")){el.classList.add("done"); phereCount++;} if(phereCount>=7) setTimeout(()=>{hideAll(); document.getElementById("vachan").style.display="flex";},500);}
+
+/* 7 VACHAN TICK LOGIC */
+let vachanCount=0;
+function checkVachan(el){ if(!el.classList.contains("done")){el.classList.add("done"); vachanCount++;} if(vachanCount>=7) setTimeout(()=>{hideAll(); document.getElementById("krishna").style.display="flex";},500);}
+
+/* HIDE ALL */
+function hideAll(){ document.querySelectorAll(".screen").forEach(s=>s.style.display="none"); document.querySelectorAll(".buttons").forEach(b=>b.style.display="none"); document.getElementById("book").style.display="none"; document.getElementById("teddy").style.display="none";}
+</script>
+
+</body>
+</html>
